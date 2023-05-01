@@ -13,7 +13,7 @@ npm run mod -- PATH
 To clean up the JSX, you can run:
 
 ```
-npm run prettify -- PATH
+npm run prettify
 ```
 
 To extract the strings into a JSON file, you can run:

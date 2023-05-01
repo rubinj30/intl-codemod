@@ -8,7 +8,6 @@ export const TestComponent = () => {
         hello, <strong>world</strong>
       </div>
       <div>foo bar</div>
-      <div>bar</div>
     </section>
   );
 };
