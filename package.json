@@ -6,7 +6,8 @@
     "mod": "npx jscodeshift -t transform.js",
     "extract": "formatjs extract",
     "extract-jsx": "npm run extract -- 'pages/*.jsx' --ignore='**/*.d.ts' --out-file en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "compile": "formatjs compile"
   },
   "dependencies": {
     "next": "12.1.3",
