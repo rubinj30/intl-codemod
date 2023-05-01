@@ -21,11 +21,18 @@ export default function transform(fileInfo, api) {
 
   // Search for hard-coded text strings and replace them with FormattedMessage components
   ast.find(j.JSXText).forEach((node) => {
-    const { value } = node.value;
+    let { value, type } = node.value;
+
     // Ignore JSXText nodes that only contain whitespace and newline characters
     if (/^\s*$/.test(value)) {
       return;
     }
+
+    // Strips whitespace from before or/and after, but only if there is a newline character
+    value =
+      type === "JSXText" && /\n/.test(value)
+        ? value.replace(/^(\n\s*)+|(\s*\n)+$/g, "")
+        : value;
 
     const id = `messages.${value.replace(/\W/g, "_")}`;
 
@@ -41,8 +48,8 @@ export default function transform(fileInfo, api) {
         j.jsxClosingElement(j.jsxIdentifier("FormattedMessage"))
       )
     );
-    node.value.openingElement.selfClosing = true
-    node.value.closingElement = null
+    node.value.openingElement.selfClosing = true;
+    node.value.closingElement = null;
   });
 
   return ast.toSource();
