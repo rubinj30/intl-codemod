@@ -2,6 +2,8 @@
 
 This is an attempt to replace strings rendered in JSX with `react-intl`'s <FormattedMessage> components, and then extract the strings into translations files.
 
+[Watch video of tool in action here](https://app.screencast.com/Sxxaa4fQyYv7V)
+
 ## Usage
 
 To run the codemod, you can run:
@@ -56,3 +58,4 @@ We likely need to find a way to flatten the output, if we are going to stick wit
 - flatten JSON output
 - I haven't used our translations library at all, so I think there will be some other things that need updating to work with it. 
 - TDD would be a good way to cover more use-cases safely, without breaking functionality as you go. I'm not sure the best way to set it up, but I'd imagine it is possible.
+- IF there is no JSX rendered strings, then we don't need to add the `react-intl` import, or whatever this import ends up being
