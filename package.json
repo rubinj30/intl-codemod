@@ -2,6 +2,12 @@
   "name": "next-app",
   "version": "0.0.55",
   "main": "index.js",
+  "scripts": {
+    "mod": "npx jscodeshift -t transform.js",
+    "extract": "formatjs extract",
+    "extract-jsx": "npm run extract -- 'pages/*.jsx' --ignore='**/*.d.ts' --out-file en.json --id-interpolation-pattern '[sha512:contenthash:base64:6]'",
+    "prettify": "prettier --write"
+  },
   "dependencies": {
     "next": "12.1.3",
     "react": "^18",
@@ -9,9 +15,11 @@
     "react-is": "^17.0.2"
   },
   "devDependencies": {
+    "@formatjs/cli": "^6.1.0",
     "@types/react": "^18",
     "bun-framework-next": "^12",
-    "typescript": "latest",
-    "react-refresh": "0.10.0"
+    "prettier": "^2.8.8",
+    "react-refresh": "0.10.0",
+    "typescript": "latest"
   }
 }
