@@ -4,6 +4,7 @@ import styles from "../styles/Home.module.css";
 import nextPackage from "next/package.json";
 
 export default function Home({}) {
+  const hello = "hello";
   return (
     <div className={styles.container}>
       <Head>
@@ -22,6 +23,7 @@ export default function Home({}) {
           Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
+        <div>{hello}</div>
       </main>
     </div>
   );
