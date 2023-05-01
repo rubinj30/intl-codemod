@@ -16,25 +16,32 @@ export default function transform(fileInfo, api) {
       [j.importSpecifier(j.identifier("FormattedMessage"))],
       j.literal("react-intl")
     );
-    ast.get().node.program.body.unshift(reactIntlImport);
+
+    // This would put it at the very top of the file
+    // ast.get().node.program.body.unshift(reactIntlImport);
+    // `ast.get().node.program.body` is essentially an array of all of the lines in file
+
+    // TODO: For now, we can put this as the 2nd, but might want to find 'React', and put it under that
+    ast.get().node.program.body.splice(1, 0, reactIntlImport);
   }
 
   // Search for hard-coded text strings and replace them with FormattedMessage components
   ast.find(j.JSXText).forEach((node) => {
     let { value, type } = node.value;
-
+    
     // Ignore JSXText nodes that only contain whitespace and newline characters
     if (/^\s*$/.test(value)) {
       return;
     }
-
+    
     // Strips whitespace from before or/and after, but only if there is a newline character
     value =
-      type === "JSXText" && /\n/.test(value)
-        ? value.replace(/^(\n\s*)+|(\s*\n)+$/g, "")
+      type === "JSXText"
+        ? value.replace(/\s*\n\s*/g, "")
         : value;
-
+    
     const id = `messages.${value.replace(/\W/g, "_")}`;
+    console.log("ast.find ~ value:", node.value);
 
     node.replace(
       j.jsxElement(
