@@ -1,36 +1,29 @@
-# Next.js with Bun runtime
+# React-intl codemod
+This is an attempt to replace strings rendered in JSX with `react-intl`'s <FormattedMessage> components, and then extract the strings into translations files. 
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with Bun.
+## Usage
 
-## Getting Started
-
-### Cloning the repo
-
-```sh
-bun create next ./app
+To run the codemod, you can run:
+```
+npm run mod -- PATH
 ```
 
-First, run the development server:
-
-```bash
-bun dev
+To clean up the JSX, you can run:
+```
+npm run prettify -- PATH
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To extract the strings into a JSON file, you can run:
+```
+npm run extract-jsx
+```
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Or you can run all of these at once:
+```
+npm run mod -- ./src/*.jsx && npm run prettify -- ./src && npm run extract-jsx
+```
 
-## Learn More
+## How it works
+The `mod` script uses Facebook's `jscodeshift` tool, which is meant for large modifications to codebases, to replace strings rendered in JSX with `react-intl`'s <FormattedMessage> components. These should tie to JSON translations files, and be able to pull in the appropriate string based on the user's locale. 
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The `extract-jsx` script calls the `@formatjs/cli`'s `extract` command, which generates the English JSON file with all of the automatically generated keys and the corresponding English values. 
