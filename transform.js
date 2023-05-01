@@ -24,7 +24,6 @@ export default function transform(fileInfo, api) {
     const { value } = node.value;
     // Ignore JSXText nodes that only contain whitespace and newline characters
     if (/^\s*$/.test(value)) {
-      console.log(j.JSXText.check(node.parent));
       return;
     }
 
@@ -42,6 +41,8 @@ export default function transform(fileInfo, api) {
         j.jsxClosingElement(j.jsxIdentifier("FormattedMessage"))
       )
     );
+    node.value.openingElement.selfClosing = true
+    node.value.closingElement = null
   });
 
   return ast.toSource();
